@@ -1,0 +1,15 @@
+name: 'Slack Action'
+description: 'Send A Custom Or Pre-Defined Slack Message Using GitHub Actions'
+inputs:
+  status:
+    description: 'Set to started / success / failed / custom'
+    required: true
+  channelId:
+    # Change to the production channel when action is finished.
+    description: 'ID of a channel to send the slack messages to. Default is set to amit-gitub-actions-public-test'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.status }}

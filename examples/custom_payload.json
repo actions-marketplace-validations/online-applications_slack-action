@@ -1,0 +1,45 @@
+{
+    "channel": "<SLACK_CHANNEL_ID>",
+    "username": "GitHub Actions",
+    "icon_emoji": ":ghost:",
+    "link_names": 1,
+    "attachments": [
+      {
+        "color": "#3465eb",
+        "title": ":ghost: This is a custom payload!! :ghost:",
+        "text": "Check it out at: <https://github.com/online-applications/slack-action> | github-actions-pipelines pipeline >",
+        "fields": [
+          {
+            "title": "Commiter",
+            "value": "<@USER_ID>",
+            "short": true
+          },
+          {
+            "title": "Project",
+            "value": "github-actions-pipelines",
+            "short": true
+          },
+          {
+            "title": "Environment",
+            "value": "staging",
+            "short": true
+          },
+          {
+            "title": "Pipeline",
+            "value": "build-staging",
+            "short": true
+          },
+          {
+            "title": "Team",
+            "value": "Team",
+            "short": true
+          },
+          {
+            "title": "Commit Message",
+            "value": "works",
+            "short": true
+          }
+        ]
+      }
+    ]
+  }
