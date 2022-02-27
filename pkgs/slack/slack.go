@@ -30,7 +30,7 @@ func GetCommitPr(commitSha string) (string, error){
 func GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId string) string{
 	// Get build URL depending on push \ pr job
 	if prBuildUrlRaw == ""{
-		return pushBuildUrl + runId
+		return pushBuildUrl + "/" + runId
 	} else {
 		return strings.TrimSuffix(prBuildUrlRaw, ".diff")
 	}

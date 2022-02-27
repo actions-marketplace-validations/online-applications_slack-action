@@ -26,7 +26,7 @@ env:
   USERS_S3_FILE_PATH:     <PATH_TO_S3_BUCKET>
   COMMIT_SHA:             ${{ github.event.pull_request.base.sha }}
   PR_BUILD_URL:           ${{ github.event.pull_request.diff_url }}
-  PUSH_BUILD_URL:         ${{ github.event.repository.owner.html_url }}
+  PUSH_BUILD_URL:         ${{ github.event.repository.html_url }}
   AWS_ACCESS_KEY_ID:      ${{ secrets.aws_access_key }}
   AWS_SECRET_ACCESS_KEY:  ${{ secrets.aws_secret_key }}
   AWS_REGION:             <AWS_REGION>
