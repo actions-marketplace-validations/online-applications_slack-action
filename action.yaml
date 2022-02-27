@@ -1,4 +1,4 @@
-name: 'Slack Action'
+name: 'Rise Slack Action'
 description: 'Send A Custom Or Pre-Defined Slack Message Using GitHub Actions'
 inputs:
   status:
