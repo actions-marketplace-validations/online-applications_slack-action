@@ -20,7 +20,7 @@ func GetCommit(commitSha, commitMessage string) (string, error) {
 
 func GetCommitPr(commitSha string) (string, error){
 	arg0 := "git log --format=%B -n 1"
-	out, err := exec.Command("bash", "-c", arg0, commitSha).Output()
+	out, err := exec.Command("sh", "-c", arg0, commitSha).Output()
 	if err != nil {
 		log.Fatalln("Error was found while getting the latest commit message", err)
 	}
