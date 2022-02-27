@@ -1,5 +1,8 @@
 name: 'Rise Slack Action'
 description: 'Send A Custom Or Pre-Defined Slack Message Using GitHub Actions'
+branding:
+  icon: message-circle
+  color: white
 inputs:
   status:
     description: 'Set to started / success / failed / custom'
