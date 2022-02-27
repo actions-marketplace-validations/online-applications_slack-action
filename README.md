@@ -24,16 +24,22 @@ env:
   CHANNEL_ID:             <CHANNEL_ID>
   USERS_FILE:             <NAME_OF_USERS_FILE>
   USERS_S3_FILE_PATH:     <PATH_TO_S3_BUCKET>
-  COMMIT_MESSAGE:         ${{ github.event.pull_request.body }}
   COMMIT_SHA:             ${{ github.event.pull_request.base.sha }}
   PR_BUILD_URL:           ${{ github.event.pull_request.diff_url }}
   PUSH_BUILD_URL:         ${{ github.event.repository.owner.html_url }}
+  AWS_ACCESS_KEY_ID:      ${{ secrets.aws_access_key }}
+  AWS_SECRET_ACCESS_KEY:  ${{ secrets.aws_secret_key }}
+  AWS_REGION:             <AWS_REGION>
+  # Dynamics - depends on pr \ push:
+  RUN_ID:                 ${{ github.run_id }}
+  ENVIRONMENT:            ${{ github.event.repository.default_branch }}
+  VERSION:                ${{ github.event.push.base.ref }}
   TEAM:                   Core
-
 ```
 **Required** Pull Request Env variables: The following env variables MUST be defined in your workflow
 ```
 env:
+  COMMIT_MESSAGE:         ${{ github.event.pull_request.body }}
   ENVIRONMENT:            ${{ github.event.pull_request.base.ref }}
   VERSION:                ${{ github.event.pull_request.base.ref }}
 
@@ -41,6 +47,7 @@ env:
 **Required** Push Env variables: The following env variables MUST be defined in your workflow
 ```
 env:
+  COMMIT_MESSAGE:         ${{ github.event.head_commit.message }}
   RUN_ID:                 ${{ github.run_id }}
   ENVIRONMENT:            ${{ github.event.repository.default_branch }}
   VERSION:                ${{ github.event.push.base.ref }}
