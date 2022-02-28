@@ -40,7 +40,7 @@ env:
 ```
 env:
   COMMIT_MESSAGE:         ${{ github.event.pull_request.body }}
-  ENVIRONMENT:            ${{ github.event.pull_request.base.ref }}
+  ENVIRONMENT:            ${{ github.event.pull_request.default_branch }}
   VERSION:                ${{ github.event.pull_request.base.ref }}
 
 ```
@@ -49,7 +49,7 @@ env:
 env:
   COMMIT_MESSAGE:         ${{ github.event.head_commit.message }}
   RUN_ID:                 ${{ github.run_id }}
-  ENVIRONMENT:            ${{ github.event.repository.default_branch }}
+  ENVIRONMENT:            ${{ github.event.ref_name }}
   VERSION:                ${{ github.event.push.base.ref }}
 ```
 **Optional** Env variables: The following env variables are optional
