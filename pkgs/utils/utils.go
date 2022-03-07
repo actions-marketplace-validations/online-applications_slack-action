@@ -44,13 +44,13 @@ func GetJsonValue(key, file string) (string, error){
 
 func GetCliArg(argNum int) string {
 	args := os.Args
-	if len(args) - 1 == argNum {
-		arg := os.Args[argNum]
-		log.Println("Found arg:", arg)
-		return arg
-	} else {
+	if len(args) == argNum {
 		return ""
 	}
+	arg := os.Args[argNum]
+	log.Println("Found arg:", arg)
+	return arg
+
 }
 
 func ReadFile(filePath string) ([]byte, error) {
