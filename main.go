@@ -29,6 +29,7 @@ func main() {
 	s3FilePath 		 			:= utils.GetEnv("USERS_S3_FILE_PATH")
 	// Get CLI arguments
 	jobStatus 					:= utils.GetCliArg(1)
+	version 					:= utils.GetCliArg(2)
 	// Getting slack variables
 	buildUrl		            := slack.GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId)
 	commitMessage, err_commit   := slack.GetCommit(commitSha, commitMessageRaw)
@@ -41,7 +42,7 @@ func main() {
     }
 
 	// Create slack message payload
-	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID)
+	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version)
 
 	// Send message
 	switch jobStatus {

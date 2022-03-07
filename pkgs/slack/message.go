@@ -38,10 +38,11 @@ type MessageFactory struct {
 	BuildJobName      string `json:"buildjobname"`
 	CommitMessage     string `json:"commitmessage"`
 	Channel           string `json:"channel"`
+	Version			  string `json:"version"`
   
 }
 
-func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environment, team, buildName, commitMeessage, channel string) MessageFactory {
+func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environment, team, buildName, commitMeessage, channel, version string) MessageFactory {
 	g := MessageFactory{}
 	g.ProjectName 	= projectName
 	g.ProjectUrl 	= projectUrl
@@ -52,6 +53,7 @@ func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environ
 	g.BuildName     = buildName
 	g.CommitMessage = commitMeessage
 	g.Channel       = channel
+	g.Version       = version
 	return g
 }
 
@@ -146,6 +148,11 @@ func (m *MessageFactory) SuccessMessage() Message {
 					{
 					Title: "Commit Message",
 					Value: m.CommitMessage,
+					Short: true,
+					},
+					{
+					Title: "Version",
+					Value: m.Version,
 					Short: true,
 					},
 				},
