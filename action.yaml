@@ -20,3 +20,4 @@ runs:
   args:
     - ${{ inputs.status }}
     - ${{ inputs.version}}
+    - ${{ inputs.channelId}}

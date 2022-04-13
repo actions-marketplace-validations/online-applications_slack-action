@@ -9,6 +9,15 @@ import (
 )
 
 func main() {
+	log.Println("Adding safe directory - patch only - remove after alpine will support new 2.35.2 git version")
+	// PATCH - Untill version 2.35.2 is supported on alpine
+	export_out, err := slack.AddSafeDirectory()
+	if err != nil {
+		log.Println("AddSafeDirectory - Error was found while getting the latest tag")
+	}
+	log.Println("AddSafeDirectory - export_out:", export_out)
+
+
 	log.Println("Sending Slack Message")
 	// Getting env variables
 	projectName 	 			:= utils.GetEnv("PROJECT_NAME")
