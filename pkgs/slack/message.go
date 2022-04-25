@@ -167,7 +167,7 @@ func (m *MessageFactory) NewService() Message {
 	payload := Message{
 		Channel:   m.Channel,
 		Username:  "GitHub Actions",
-		IconEmoji: ":customer-service:",
+		IconEmoji: ":githubactions:",
 		LinkNames: 1,
 		Attachments: []Attachment{
 			{
