@@ -162,6 +162,61 @@ func (m *MessageFactory) SuccessMessage() Message {
 	return payload
 }
 
+func (m *MessageFactory) NewService() Message {
+	log.Println("Success message func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":customer-service:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#ffffff",
+				Title: fmt.Sprintf("@channel NEW service has been created!!: %s", m.ProjectName),
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+                    {
+					Title: "Commiter",
+					Value: "<@" + m.Commiter + ">",
+					Short: true,
+                    },
+                    {
+					Title: "Project",
+					Value: m.ProjectName,
+					Short: true,
+					},
+                    {
+					Title: "Environment",
+					Value: m.Environment,
+					Short: true,
+					},
+					{
+					Title: "Pipeline",
+					Value: m.BuildName,
+					Short: true,
+					},
+                    {
+					Title: "Team",
+					Value: m.Team,
+					Short: true,
+					},
+					{
+					Title: "Commit Message",
+					Value: m.CommitMessage,
+					Short: true,
+					},
+					{
+					Title: "Version",
+					Value: m.Version,
+					Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
 func (m *MessageFactory) FailedMessage() Message {
 	log.Println("Fail message func started")
 	payload := Message{
