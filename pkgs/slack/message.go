@@ -172,7 +172,7 @@ func (m *MessageFactory) NewService() Message {
 		Attachments: []Attachment{
 			{
 				Color: "#ffffff",
-				Title: fmt.Sprintf("@channel NEW service has been created!!: %s", m.ProjectName),
+				Title: "@channel NEW service has been created!!",
 				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
 				Fields: []Field{
                     {
@@ -186,28 +186,8 @@ func (m *MessageFactory) NewService() Message {
 					Short: true,
 					},
                     {
-					Title: "Environment",
-					Value: m.Environment,
-					Short: true,
-					},
-					{
-					Title: "Pipeline",
-					Value: m.BuildName,
-					Short: true,
-					},
-                    {
 					Title: "Team",
 					Value: m.Team,
-					Short: true,
-					},
-					{
-					Title: "Commit Message",
-					Value: m.CommitMessage,
-					Short: true,
-					},
-					{
-					Title: "Version",
-					Value: m.Version,
 					Short: true,
 					},
 				},
