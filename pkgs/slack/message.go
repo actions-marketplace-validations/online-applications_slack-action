@@ -197,6 +197,41 @@ func (m *MessageFactory) NewService() Message {
 	return payload
 }
 
+func (m *MessageFactory) Cron() Message {
+	log.Println("Success message func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#ffffff",
+				Title: "@channel NEW service has been created!!",
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+                    {
+					Title: "Trigger",
+					Value: "Cron ",
+					Short: true,
+                    },
+                    {
+					Title: "Project",
+					Value: m.ProjectName,
+					Short: true,
+					},
+                    {
+					Title: "Team",
+					Value: m.Team,
+					Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
 func (m *MessageFactory) FailedMessage() Message {
 	log.Println("Fail message func started")
 	payload := Message{

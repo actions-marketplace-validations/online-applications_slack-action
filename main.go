@@ -95,6 +95,16 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+	case "cron":
+		payloadRaw := factory.Cron()
+		payload, err_json := utils.JsonMarshal(payloadRaw)
+		if err_json != nil {
+			log.Fatal(err_json)
+		}
+		err := slack.SendMessage(payload, url)
+		if err != nil {
+			log.Fatal(err)
+		}
 	case "custom":
 		payload, err_json := utils.ReadFile(customPayload)
 		if err_json != nil {
