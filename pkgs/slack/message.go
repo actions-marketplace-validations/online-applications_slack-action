@@ -163,7 +163,7 @@ func (m *MessageFactory) SuccessMessage() Message {
 }
 
 func (m *MessageFactory) NewService() Message {
-	log.Println("Success message func started")
+	log.Println("New service message func started")
 	payload := Message{
 		Channel:   m.Channel,
 		Username:  "GitHub Actions",
@@ -197,8 +197,8 @@ func (m *MessageFactory) NewService() Message {
 	return payload
 }
 
-func (m *MessageFactory) Cron() Message {
-	log.Println("Success message func started")
+func (m *MessageFactory) CronStart() Message {
+	log.Println("CronStart message func started")
 	payload := Message{
 		Channel:   m.Channel,
 		Username:  "GitHub Actions",
@@ -206,23 +206,63 @@ func (m *MessageFactory) Cron() Message {
 		LinkNames: 1,
 		Attachments: []Attachment{
 			{
-				Color: "#ffffff",
-				Title: "@channel NEW service has been created!!",
+				Color: "#62E6F5",
+				Title: "Cron job has started ",
 				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
 				Fields: []Field{
-                    {
-					Title: "Trigger",
-					Value: "Cron ",
-					Short: true,
-                    },
                     {
 					Title: "Project",
 					Value: m.ProjectName,
 					Short: true,
 					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+func (m *MessageFactory) CronSuccess() Message {
+	log.Println("CronSuccess message func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#36a64f",
+				Title: "Cron job has finished successfully",
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
                     {
-					Title: "Team",
-					Value: m.Team,
+					Title: "Project",
+					Value: m.ProjectName,
+					Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+func (m *MessageFactory) CronFailed() Message {
+	log.Println("CronSuccess message func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#36a64f",
+				Title: ":collision: Cron job has failed :collision:",
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+                    {
+					Title: "Project",
+					Value: m.ProjectName,
 					Short: true,
 					},
 				},

@@ -95,8 +95,28 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-	case "cron":
-		payloadRaw := factory.Cron()
+	case "cron_start":
+		payloadRaw := factory.CronStart()
+		payload, err_json := utils.JsonMarshal(payloadRaw)
+		if err_json != nil {
+			log.Fatal(err_json)
+		}
+		err := slack.SendMessage(payload, url)
+		if err != nil {
+			log.Fatal(err)
+		}
+	case "cron_success":
+		payloadRaw := factory.CronSuccess()
+		payload, err_json := utils.JsonMarshal(payloadRaw)
+		if err_json != nil {
+			log.Fatal(err_json)
+		}
+		err := slack.SendMessage(payload, url)
+		if err != nil {
+			log.Fatal(err)
+		}
+	case "cron_failed":
+		payloadRaw := factory.CronFailed()
 		payload, err_json := utils.JsonMarshal(payloadRaw)
 		if err_json != nil {
 			log.Fatal(err_json)
