@@ -256,7 +256,7 @@ func (m *MessageFactory) CronFailed() Message {
 		LinkNames: 1,
 		Attachments: []Attachment{
 			{
-				Color: "#36a64f",
+				Color: "#d42a1e",
 				Title: ":collision: Cron job has failed :collision:",
 				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
 				Fields: []Field{
