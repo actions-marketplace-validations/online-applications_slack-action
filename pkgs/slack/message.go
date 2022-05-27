@@ -210,9 +210,9 @@ func (m *MessageFactory) CronStart() Message {
 				Title: "Cron job has started ",
 				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
 				Fields: []Field{
-                    {
-					Title: "Project",
-					Value: m.ProjectName,
+					{
+					Title: "Pipeline",
+					Value: m.BuildName,
 					Short: true,
 					},
 				},
@@ -235,9 +235,9 @@ func (m *MessageFactory) CronSuccess() Message {
 				Title: "Cron job has finished successfully",
 				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
 				Fields: []Field{
-                    {
-					Title: "Project",
-					Value: m.ProjectName,
+					{
+					Title: "Pipeline",
+					Value: m.BuildName,
 					Short: true,
 					},
 				},
@@ -260,9 +260,9 @@ func (m *MessageFactory) CronFailed() Message {
 				Title: ":collision: Cron job has failed :collision:",
 				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
 				Fields: []Field{
-                    {
-					Title: "Project",
-					Value: m.ProjectName,
+					{
+					Title: "Pipeline",
+					Value: m.BuildName,
 					Short: true,
 					},
 				},
