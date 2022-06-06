@@ -12,6 +12,7 @@ env:
   # Dynamics:
   ENVIRONMENT:            ${{ github.ref_name }}
 
+jobs:
   Build:
     name: Build Image
     runs-on: ubuntu-latest
