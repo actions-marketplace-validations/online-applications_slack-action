@@ -29,7 +29,6 @@ env:
 jobs:
   Build:
     name: Build Image
-    needs: [Slack_Start, Version, Test]
     runs-on: ubuntu-latest
     steps:
     - name: Check out code
