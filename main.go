@@ -66,14 +66,26 @@ func main() {
 			log.Fatal(err)
 		}
 	case "success":
-		payloadRaw := factory.SuccessMessage()
-		payload, err_json := utils.JsonMarshal(payloadRaw)
-		if err_json != nil {
-			log.Fatal(err_json)
-		}
-		err := slack.SendMessage(payload, url)
-		if err != nil {
-			log.Fatal(err)
+		if version != "" {
+			payloadRaw := factory.SuccessMessage()
+			payload, err_json := utils.JsonMarshal(payloadRaw)
+			if err_json != nil {
+				log.Fatal(err_json)
+			}
+			err := slack.SendMessage(payload, url)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			payloadRaw := factory.SuccessMessagenNoVersion()
+			payload, err_json := utils.JsonMarshal(payloadRaw)
+			if err_json != nil {
+				log.Fatal(err_json)
+			}
+			err := slack.SendMessage(payload, url)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	case "failed":
 		payloadRaw := factory.FailedMessage()
