@@ -10,9 +10,9 @@ import (
 	"fmt"
 )
 
-func GetCommit(commitSha, commitMessage string) (string, error) {
+func GetCommit(commitSha, commitMessage, jobStatus string) (string, error) {
 	// Get commit from env, if none was given, get from S3
-	if commitMessage != "" {
+	if commitMessage != "" || strings.HasPrefix(jobStatus, "cron") {
 		return commitMessage, nil
 	} else {
 		return GetCommitPr(commitSha)

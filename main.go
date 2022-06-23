@@ -41,7 +41,7 @@ func main() {
 	version 					:= utils.GetCliArg(2)
 	// Getting slack variables
 	buildUrl		            := slack.GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId)
-	commitMessage, err_commit   := slack.GetCommit(commitSha, commitMessageRaw)
+	commitMessage, err_commit   := slack.GetCommit(commitSha, commitMessageRaw, jobStatus)
 	// Get slack ID
 	err_s3 						:= s3.DownloadS3(s3FilePath, usersFile)
 	slackID, err_json 			:= utils.GetJsonValue(commiter, usersFile)
