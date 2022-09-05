@@ -55,7 +55,7 @@ jobs:
         docker tag $ECR_REGISTRY/slack-action:production_v2.0.0 slack-action
     - name: Send Slack Started Message
       run: |
-        docker run --env-file .github/github_actions.env slack-action started
+        docker run --env-file .github/github_actions.env slack-action started ${{ env.RELEASE_TAG }}
 
   tag_and_release:
     runs-on: ubuntu-latest
@@ -134,7 +134,7 @@ jobs:
         docker tag $ECR_REGISTRY/slack-action:production_v2.0.0 slack-action
     - name: Send Slack Failed Message
       run: |
-        docker run --env-file .github/github_actions.env slack-action failed
+        docker run --env-file .github/github_actions.env slack-action failed ${{ env.RELEASE_TAG }}
 
   slack_success:
     name: Send Slack Message on success
@@ -163,4 +163,4 @@ jobs:
         docker tag $ECR_REGISTRY/slack-action:production_v2.0.0 slack-action
     - name: Send Slack Success Message
       run: |
-        docker run --env-file .github/github_actions.env slack-action success
+        docker run --env-file .github/github_actions.env slack-action success ${{ env.RELEASE_TAG }}
