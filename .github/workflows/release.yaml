@@ -57,7 +57,7 @@ jobs:
       run: |
         docker run --env-file .github/github_actions.env slack-action started
 
-  build:
+  tag_and_release:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout source code
@@ -109,10 +109,10 @@ jobs:
   slack_fail:
     name: Send Slack Message on fail
     runs-on: ubuntu-latest
-    if: ${{ always() && !cancelled() && contains(join(needs.slack_start.result, ''), 'failure') || contains(join(needs.build.result, ''), 'failure') || contains(join(needs.publish_docker.result, ''), 'failure') }}
+    if: ${{ always() && !cancelled() && contains(join(needs.slack_start.result, ''), 'failure') || contains(join(needs.tag_and_release.result, ''), 'failure') || contains(join(needs.publish_docker.result, ''), 'failure') }}
     needs:
     - slack_start
-    - build
+    - tag_and_release
     - publish_docker
     steps:
     - name: Checkout source
@@ -139,9 +139,10 @@ jobs:
   slack_success:
     name: Send Slack Message on success
     runs-on: ubuntu-latest
-    if: ${{ !cancelled() && contains(join(needs.build.result, ''), 'success') && contains(join(needs.publish_docker.result, ''), 'success') }}
+    if: ${{ !cancelled() && contains(join(needs.tag_and_release.result, ''), 'success') && contains(join(needs.publish_docker.result, ''), 'success') }}
     needs:
-    - build
+    - tag_and_release
+    - publish_docker
     steps:
     - name: Checkout source
       uses: actions/checkout@v2
