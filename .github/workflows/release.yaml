@@ -29,7 +29,7 @@ env:
   TEAM:                   Media
 
   # Release data
-  RELEASE_TAG:            test
+  RELEASE_TAG:            v2.0.0
 
 jobs:
   slack_start:
@@ -103,8 +103,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        docker build -t $ECR_REGISTRY/slack-action:${{ env.RELEASE_TAG }} .
-        docker push $ECR_REGISTRY/slack-action:${{ env.RELEASE_TAG }}
+        docker build -t $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }} .
+        docker push $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }}
 
   slack_fail:
     name: Send Slack Message on fail
