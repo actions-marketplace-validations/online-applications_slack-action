@@ -27,7 +27,7 @@ env:
   RUN_ID:                 ${{ github.run_id }}
   ENVIRONMENT:            ${{ github.ref_name }}
   TEAM:                   Media
-  
+
   # Release data
   RELEASE_TAG:            test
 
@@ -80,6 +80,8 @@ jobs:
       matrix:
         environments: [search, prog]
     steps:
+    - name: Checkout source code
+      uses: actions/checkout@v2
     - name: Configure AWS credentials search
       if: ${{ matrix.environments == 'search'}}
       uses: aws-actions/configure-aws-credentials@v1
