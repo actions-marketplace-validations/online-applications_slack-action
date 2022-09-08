@@ -27,11 +27,12 @@ env:
   AWS_REGION:                   us-east-1
 
   # Dynamics:
-  RUN_ID:                 ${{ github.run_id }}
-  ENVIRONMENT:            ${{ github.ref_name }}
+  RUN_ID:                       ${{ github.run_id }}
+  ENVIRONMENT:                  ${{ github.ref_name }}
+  TEAM:                         DevOps
 
   # Release data
-  RELEASE_TAG:            v2.0.0
+  RELEASE_TAG:                  v2.0.0
 
 jobs:
   Slack_Start:
