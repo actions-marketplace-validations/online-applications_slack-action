@@ -43,8 +43,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID_SEARCH }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY_SEARCH }}
         aws-region: us-east-1
     - name: Login to Amazon ECR
       id: login-ecr
@@ -125,8 +125,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID_SEARCH }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY_SEARCH }}
         aws-region: us-east-1
     - name: Login to Amazon ECR
       id: login-ecr
@@ -152,8 +152,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID_SEARCH }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY_SEARCH }}
         aws-region: us-east-1
     - name: Login to Amazon ECR
       id: login-ecr
