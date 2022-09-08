@@ -53,8 +53,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        docker pull $ECR_REGISTRY/slack-action:production_v2.0.0
-        docker tag $ECR_REGISTRY/slack-action:production_v2.0.0 slack-action
+        docker pull $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }}
+        docker tag $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }} slack-action
     - name: Send Slack Started Message
       run: |
         docker run --env-file .github/github_actions.env slack-action started
@@ -66,15 +66,15 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
-    - if: ${{ env.ENVIRONMENT  == 'production' }}
-      name: Update tag ${{ env.RELEASE_TAG }}
+    - name: Update tag ${{ env.RELEASE_TAG }}
+      if: ${{ env.ENVIRONMENT  == 'production' }}
       run: |
         git tag --delete ${{ env.RELEASE_TAG }} || true
         git push origin --delete ${{ env.RELEASE_TAG }} || true
         git tag ${{ env.RELEASE_TAG }}
         git push origin ${{ env.RELEASE_TAG }}
-    - if: ${{ env.ENVIRONMENT  == 'production' }}
-      name: Release tag ${{ env.RELEASE_TAG }}
+    - name: Release tag ${{ env.RELEASE_TAG }}
+      if: ${{ env.ENVIRONMENT  == 'production' }}
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ env.RELEASE_TAG }}
@@ -88,18 +88,26 @@ jobs:
     steps:
     - name: Checkout source code
       uses: actions/checkout@v2
-    - if: ${{ env.ENVIRONMENT  == 'production' }}
-      name: Configure AWS credentials
+    - name: Configure AWS credentials for SEARCH
+      if: ${{ env.ENVIRONMENT  == 'production' && matrix.environments == 'SEARCH' }}
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID}}_${{matrix.account}}
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY}}_${{matrix.account}}
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID_SEARCH }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY_SEARCH }}
+        aws-region: us-east-1
+    - name: Configure AWS credentials for PROG
+      if: ${{ env.ENVIRONMENT  == 'production' && matrix.environments == 'PROG' }}
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID_PROG }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY_PROG }}
         aws-region: us-east-1
     - name: Login to Amazon ECR
+      if: ${{ env.ENVIRONMENT  == 'production' }}
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-    - if: ${{ env.ENVIRONMENT  == 'production' }}
-      name: Build & Tag docker
+    - name: Build & Tag docker
+      if: ${{ env.ENVIRONMENT  == 'production' }}
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
@@ -127,8 +135,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        docker pull $ECR_REGISTRY/slack-action:production_v2.0.0
-        docker tag $ECR_REGISTRY/slack-action:production_v2.0.0 slack-action
+        docker pull $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }}
+        docker tag $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }} slack-action
     - name: Send Slack Failed Message
       run: |
         docker run --env-file .github/github_actions.env slack-action failed ${{ env.RELEASE_TAG }}
@@ -154,8 +162,8 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       run: |
-        docker pull $ECR_REGISTRY/slack-action:production_v2.0.0
-        docker tag $ECR_REGISTRY/slack-action:production_v2.0.0 slack-action
+        docker pull $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }}
+        docker tag $ECR_REGISTRY/slack-action:production_${{ env.RELEASE_TAG }} slack-action
     - name: Send Slack Success Message
       run: |
         docker run --env-file .github/github_actions.env slack-action success ${{ env.RELEASE_TAG }}
