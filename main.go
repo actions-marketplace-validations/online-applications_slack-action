@@ -46,7 +46,10 @@ func main() {
 	err_s3 						:= s3.DownloadS3(s3FilePath, usersFile)
 	slackID, err_json 			:= utils.GetJsonValue(commiter, usersFile)
 	// Error handing
-	if err_json != nil || err_s3 != nil || err_commit != nil{
+	if err_commit != nil {
+		log.Println("Found error!", err_commit)
+	}
+	if err_json != nil || err_s3 != nil{
         log.Fatal("Found error!", err_json, err_s3, err_commit)
     }
 
