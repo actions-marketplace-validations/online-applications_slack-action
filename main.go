@@ -36,10 +36,10 @@ func main() {
 	customPayload    			:= utils.GetEnv("CUSTOM_PAYLOAD_PATH")
 	commitSha        			:= utils.GetEnv("COMMIT_SHA")
 	s3FilePath 		 			:= utils.GetEnv("USERS_S3_FILE_PATH")
+	endpoint					:= utils.GetEnv("ENDPOINT")
 	// Get CLI arguments
 	jobStatus 					:= utils.GetCliArg(1)
 	version 					:= utils.GetCliArg(2)
-	endpoint					:= utils.GetCliArg(3)
 	// Getting slack variables
 	buildUrl		            := slack.GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId)
 	commitMessage, err_commit   := slack.GetCommit(commitSha, commitMessageRaw, jobStatus)
