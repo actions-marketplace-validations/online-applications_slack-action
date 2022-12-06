@@ -10,9 +10,9 @@ inputs:
   version:
     description: 'Pass tag version for success message'
     required: false
-  channelId:
+  endpoint:
     # Change to the production channel when action is finished.
-    description: 'ID of a channel to send the slack messages to. Default is set to amit-gitub-actions-public-test'
+    description: 'endpoint of a service'
     required: false
 runs:
   using: 'docker'
@@ -20,4 +20,4 @@ runs:
   args:
     - ${{ inputs.status }}
     - ${{ inputs.version}}
-    - ${{ inputs.channelId}}
+    - ${{ inputs.endpoint}}
