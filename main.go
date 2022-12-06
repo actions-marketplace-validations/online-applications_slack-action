@@ -39,6 +39,7 @@ func main() {
 	// Get CLI arguments
 	jobStatus 					:= utils.GetCliArg(1)
 	version 					:= utils.GetCliArg(2)
+	endpoint					:= utils.GetCliArg(3)
 	// Getting slack variables
 	buildUrl		            := slack.GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId)
 	commitMessage, err_commit   := slack.GetCommit(commitSha, commitMessageRaw, jobStatus)
@@ -54,7 +55,7 @@ func main() {
     }
 
 	// Create slack message payload
-	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version)
+	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version, endpoint)
 
 	// Send message
 	switch jobStatus {
@@ -89,6 +90,16 @@ func main() {
 			if err != nil {
 				log.Fatal(err)
 			}
+		}
+	case "success_feature":
+		payloadRaw := factory.SuccessMessageFeature()
+		payload, err_json := utils.JsonMarshal(payloadRaw)
+		if err_json != nil {
+			log.Fatal(err_json)
+		}
+		err := slack.SendMessage(payload, url)
+		if err != nil {
+			log.Fatal(err)
 		}
 	case "failed":
 		payloadRaw := factory.FailedMessage()
