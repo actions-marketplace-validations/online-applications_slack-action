@@ -163,6 +163,51 @@ func (m *MessageFactory) SuccessMessage() Message {
 	return payload
 }
 
+func (m *MessageFactory) StartMessageFeature() Message {
+	log.Println("Start message func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#3465eb",
+				Title: fmt.Sprintf("GitHub Actions Build Started: %s", m.ProjectName),
+				Text:  fmt.Sprintf("Check it out at: <%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+					{
+						Title: "Commiter",
+						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "Project",
+						Value: m.ProjectName,
+						Short: true,
+					},
+					{
+						Title: "Environment",
+						Value: m.Environment,
+						Short: true,
+					},
+					{
+						Title: "Pipeline",
+						Value: m.BuildName,
+						Short: true,
+					},
+					{
+						Title: "Commit Message",
+						Value: m.CommitMessage,
+						Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
 func (m *MessageFactory) SuccessMessageFeature() Message {
 	log.Println("Success message feature func started")
 	payload := Message{

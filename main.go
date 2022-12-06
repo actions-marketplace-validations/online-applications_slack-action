@@ -91,6 +91,16 @@ func main() {
 				log.Fatal(err)
 			}
 		}
+	case "started_feature":
+		payloadRaw := factory.StartMessageFeature()
+		payload, err_json := utils.JsonMarshal(payloadRaw)
+		if err_json != nil {
+			log.Fatal(err_json)
+		}
+		err := slack.SendMessage(payload, url)
+		if err != nil {
+			log.Fatal(err)
+		}
 	case "success_feature":
 		payloadRaw := factory.SuccessMessageFeature()
 		payload, err_json := utils.JsonMarshal(payloadRaw)
