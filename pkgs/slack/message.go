@@ -248,7 +248,7 @@ func (m *MessageFactory) SuccessMessageFeature() Message {
 					},
 					{
 						Title: "Endpoint",
-						Value: m.Endpoint,
+						Value: fmt.Sprintf("<%s | %s >", m.Endpoint, m.Endpoint),
 						Short: true,
 					},
 					{
