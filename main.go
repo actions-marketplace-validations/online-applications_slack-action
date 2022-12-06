@@ -37,6 +37,7 @@ func main() {
 	commitSha        			:= utils.GetEnv("COMMIT_SHA")
 	s3FilePath 		 			:= utils.GetEnv("USERS_S3_FILE_PATH")
 	endpoint					:= utils.GetEnv("ENDPOINT")
+	log.Println("found endpoint:", endpoint)
 	// Get CLI arguments
 	jobStatus 					:= utils.GetCliArg(1)
 	version 					:= utils.GetCliArg(2)

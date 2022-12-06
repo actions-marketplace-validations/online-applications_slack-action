@@ -210,6 +210,7 @@ func (m *MessageFactory) StartMessageFeature() Message {
 
 func (m *MessageFactory) SuccessMessageFeature() Message {
 	log.Println("Success message feature func started")
+	log.Println("inside SuccessMessageFeature, endpoint:", m.Endpoint)
 	payload := Message{
 		Channel:   m.Channel,
 		Username:  "GitHub Actions",
