@@ -36,8 +36,7 @@ func main() {
 	customPayload    			:= utils.GetEnv("CUSTOM_PAYLOAD_PATH")
 	commitSha        			:= utils.GetEnv("COMMIT_SHA")
 	s3FilePath 		 			:= utils.GetEnv("USERS_S3_FILE_PATH")
-	endpoint					:= utils.GetEnv("ENDPOINT")
-	log.Println("found endpoint:", endpoint)
+	zone					    := utils.GetEnv("ZONE")
 	// Get CLI arguments
 	jobStatus 					:= utils.GetCliArg(1)
 	version 					:= utils.GetCliArg(2)
@@ -56,7 +55,7 @@ func main() {
     }
 
 	// Create slack message payload
-	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version, endpoint)
+	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version, zone)
 
 	// Send message
 	switch jobStatus {

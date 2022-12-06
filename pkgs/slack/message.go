@@ -39,10 +39,10 @@ type MessageFactory struct {
 	CommitMessage     string `json:"commitmessage"`
 	Channel           string `json:"channel"`
 	Version           string `json:"version"`
-	Endpoint          string `json:"endpoint"`
+	Zone              string `json:"zone"`
 }
 
-func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environment, team, buildName, commitMeessage, channel, version, endpoint string) MessageFactory {
+func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environment, team, buildName, commitMeessage, channel, version, zone string) MessageFactory {
 	g := MessageFactory{}
 	g.ProjectName = projectName
 	g.ProjectUrl = projectUrl
@@ -54,7 +54,7 @@ func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environ
 	g.CommitMessage = commitMeessage
 	g.Channel = channel
 	g.Version = version
-	g.Endpoint = endpoint
+	g.Zone = zone
 	return g
 }
 
@@ -210,7 +210,6 @@ func (m *MessageFactory) StartMessageFeature() Message {
 
 func (m *MessageFactory) SuccessMessageFeature() Message {
 	log.Println("Success message feature func started")
-	log.Println("inside SuccessMessageFeature, endpoint:", m.Endpoint)
 	payload := Message{
 		Channel:   m.Channel,
 		Username:  "GitHub Actions",
@@ -249,7 +248,7 @@ func (m *MessageFactory) SuccessMessageFeature() Message {
 					},
 					{
 						Title: "Endpoint",
-						Value: fmt.Sprintf("<%s | %s >", m.Endpoint, m.Endpoint),
+						Value: fmt.Sprintf("<https://%s-%s.%s>", m.Environment, m.ProjectName, m.Zone),
 						Short: true,
 					},
 					{
