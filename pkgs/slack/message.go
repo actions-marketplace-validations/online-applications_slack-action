@@ -263,6 +263,97 @@ func (m *MessageFactory) SuccessMessageFeature() Message {
 	return payload
 }
 
+func (m *MessageFactory) StartMessageRollout() Message {
+	log.Println("Start message rollout func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#ff00cf",
+				Title: fmt.Sprintf("Rollout Started: %s", m.ProjectName),
+				Text:  fmt.Sprintf("Check it out at: <%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+					{
+						Title: "Triggered by",
+						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "Project",
+						Value: m.ProjectName,
+						Short: true,
+					},
+					{
+						Title: "Environment",
+						Value: m.Environment,
+						Short: true,
+					},
+					{
+						Title: "Pipeline",
+						Value: m.BuildName,
+						Short: true,
+					},
+					{
+						Title: "Endpoint",
+						Value: fmt.Sprintf("<https://%s-%s.%s>", m.Environment, m.ProjectName, m.Zone),
+						Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+func (m *MessageFactory) SuccessMessageRollout() Message {
+	log.Println("Success message rollout func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#36a64f",
+				Title: fmt.Sprintf("Rollout Succeeded: %s", m.ProjectName),
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+					{
+						Title: "Triggered by",
+						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "Project",
+						Value: m.ProjectName,
+						Short: true,
+					},
+					{
+						Title: "Environment",
+						Value: m.Environment,
+						Short: true,
+					},
+					{
+						Title: "Pipeline",
+						Value: m.BuildName,
+						Short: true,
+					},
+					{
+						Title: "Endpoint",
+						Value: fmt.Sprintf("<https://%s-%s.%s>", m.Environment, m.ProjectName, m.Zone),
+						Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+
 func (m *MessageFactory) SuccessMessagenNoVersion() Message {
 	log.Println("Success message func started")
 	payload := Message{
