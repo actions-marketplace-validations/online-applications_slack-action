@@ -121,6 +121,16 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
+	case "failed_rollout":
+		payloadRaw := factory.FailedMessageRollout()
+		payload, err_json := utils.JsonMarshal(payloadRaw)
+		if err_json != nil {
+			log.Fatal(err_json)
+		}
+		err := slack.SendMessage(payload, url)
+		if err != nil {
+			log.Fatal(err)
+		}
 	case "success_rollout":
 		payloadRaw := factory.SuccessMessageRollout()
 		payload, err_json := utils.JsonMarshal(payloadRaw)

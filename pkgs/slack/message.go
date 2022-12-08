@@ -354,6 +354,48 @@ func (m *MessageFactory) SuccessMessageRollout() Message {
 }
 
 
+func (m *MessageFactory) FailedMessageRollout() Message {
+	log.Println("Fail message rollout func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#d42a1e",
+				Title: fmt.Sprintf(":collision: Build Failed: %s :collision:", m.ProjectName),
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+					{
+						Title: "Commiter",
+						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "Project",
+						Value: m.ProjectName,
+						Short: true,
+					},
+					{
+						Title: "Environment",
+						Value: m.Environment,
+						Short: true,
+					},
+					{
+						Title: "Pipeline",
+						Value: m.BuildName,
+						Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+
+
 func (m *MessageFactory) SuccessMessagenNoVersion() Message {
 	log.Println("Success message func started")
 	payload := Message{
