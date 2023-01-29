@@ -263,6 +263,63 @@ func (m *MessageFactory) SuccessMessageFeature() Message {
 	return payload
 }
 
+
+func (m *MessageFactory) SuccessMessageSdk() Message {
+	log.Println("Success message sdk func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 1,
+		Attachments: []Attachment{
+			{
+				Color: "#36a64f",
+				Title: fmt.Sprintf("GitHub Actions Build Succeeded: %s", m.ProjectName),
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+					{
+						Title: "Commiter",
+						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "Project",
+						Value: m.ProjectName,
+						Short: true,
+					},
+					{
+						Title: "Environment",
+						Value: m.Environment,
+						Short: true,
+					},
+					{
+						Title: "Pipeline",
+						Value: m.BuildName,
+						Short: true,
+					},
+					{
+						Title: "Commit Message",
+						Value: m.CommitMessage,
+						Short: true,
+					},
+					{
+						Title: "Endpoint",
+						Value: fmt.Sprintf("<https://%s-%s.%s/sdk-%s>", m.ProjectName, m.Environment, m.Zone, m.Environment),
+						Short: true,
+					},
+					{
+						Title: "Version",
+						Value: m.Version,
+						Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+
 func (m *MessageFactory) StartMessageRollout() Message {
 	log.Println("Start message rollout func started")
 	payload := Message{
