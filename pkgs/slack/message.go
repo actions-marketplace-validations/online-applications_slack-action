@@ -263,7 +263,6 @@ func (m *MessageFactory) SuccessMessageFeature() Message {
 	return payload
 }
 
-
 func (m *MessageFactory) SuccessMessageSdk() Message {
 	log.Println("Success message sdk func started")
 	payload := Message{
@@ -318,7 +317,6 @@ func (m *MessageFactory) SuccessMessageSdk() Message {
 	}
 	return payload
 }
-
 
 func (m *MessageFactory) StartMessageRollout() Message {
 	log.Println("Start message rollout func started")
@@ -410,7 +408,6 @@ func (m *MessageFactory) SuccessMessageRollout() Message {
 	return payload
 }
 
-
 func (m *MessageFactory) FailedMessageRollout() Message {
 	log.Println("Fail message rollout func started")
 	payload := Message{
@@ -450,8 +447,6 @@ func (m *MessageFactory) FailedMessageRollout() Message {
 	}
 	return payload
 }
-
-
 
 func (m *MessageFactory) SuccessMessagenNoVersion() Message {
 	log.Println("Success message func started")
@@ -629,6 +624,61 @@ func (m *MessageFactory) FailedMessage() Message {
 					{
 						Title: "Commiter",
 						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "Project",
+						Value: m.ProjectName,
+						Short: true,
+					},
+					{
+						Title: "Environment",
+						Value: m.Environment,
+						Short: true,
+					},
+					{
+						Title: "Pipeline",
+						Value: m.BuildName,
+						Short: true,
+					},
+					{
+						Title: "Team",
+						Value: m.Team,
+						Short: true,
+					},
+					{
+						Title: "Commit Message",
+						Value: m.CommitMessage,
+						Short: true,
+					},
+				},
+			},
+		},
+	}
+	return payload
+}
+
+func (m *MessageFactory) FailedMessageDevOps() Message {
+	log.Println("Fail message func started")
+	payload := Message{
+		Channel:   m.Channel,
+		Username:  "GitHub Actions",
+		IconEmoji: ":githubactions:",
+		LinkNames: 2,
+		Attachments: []Attachment{
+			{
+				Color: "#d42a1e",
+				Title: fmt.Sprintf(":collision: Build Failed: %s :collision:", m.ProjectName),
+				Text:  fmt.Sprintf("<%s | %s pipeline >", m.BuildUrl, m.ProjectName),
+				Fields: []Field{
+					{
+						Title: "Commiter",
+						Value: "<@" + m.Commiter + ">",
+						Short: true,
+					},
+					{
+						Title: "DevOps Team",
+						Value: "@rise-devops-team",
 						Short: true,
 					},
 					{
