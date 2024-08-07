@@ -2,15 +2,15 @@ package main
 
 import (
 	"log"
+	"slack-action/pkgs/s3"
 	"slack-action/pkgs/slack"
 	"slack-action/pkgs/utils"
-	"slack-action/pkgs/s3"
 	"strings"
 )
 
 func main() {
 	log.Println("Adding safe directory - patch only - remove after alpine will support new 2.35.2 git version")
-	// PATCH - Untill version 2.35.2 is supported on alpine 
+	// PATCH - Untill version 2.35.2 is supported on alpine
 	export_out, err := slack.AddSafeDirectory()
 	if err != nil {
 		log.Println("AddSafeDirectory - Error was found while getting the latest tag")
@@ -36,6 +36,7 @@ func main() {
 	commitSha := utils.GetEnv("COMMIT_SHA")
 	s3FilePath := utils.GetEnv("USERS_S3_FILE_PATH")
 	zone := utils.GetEnv("ZONE")
+	endpoint := utils.GetEnv("ENDPOINT")
 	// Get CLI arguments
 	jobStatus := utils.GetCliArg(1)
 	version := utils.GetCliArg(2)
@@ -54,7 +55,7 @@ func main() {
 	}
 
 	// Create slack message payload
-	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version, zone)
+	factory := slack.CreateMessageFactory(projectName, repositoryUrl, buildUrl, slackID, environment, team, buildName, commitMessage, channelID, version, zone, endpoint)
 
 	// Send message
 	switch jobStatus {

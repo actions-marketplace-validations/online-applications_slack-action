@@ -2,12 +2,12 @@ package slack
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os/exec"
 	"strings"
-	"fmt"
 )
 
 func GetCommit(commitSha, commitMessage, jobStatus string) (string, error) {
@@ -19,7 +19,7 @@ func GetCommit(commitSha, commitMessage, jobStatus string) (string, error) {
 	}
 }
 
-func GetCommitPr(commitSha string) (string, error){
+func GetCommitPr(commitSha string) (string, error) {
 	log.Println("Fetching pr commit...")
 	arg0 := "git log --format=%B -n 1"
 
@@ -36,7 +36,7 @@ func GetCommitPr(commitSha string) (string, error){
 	return out.String(), err
 }
 
-func AddSafeDirectory() (string, error){
+func AddSafeDirectory() (string, error) {
 	log.Println("Exporting git ceiling...")
 
 	cmd := exec.Command("sh", "-c", "git config --global --add safe.directory /github/workspace")
@@ -52,16 +52,16 @@ func AddSafeDirectory() (string, error){
 	return out.String(), err
 }
 
-func GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId string) string{
+func GetBuildUrl(prBuildUrlRaw, pushBuildUrl, runId string) string {
 	// Get build URL depending on push \ pr job
-	if prBuildUrlRaw == ""{
+	if prBuildUrlRaw == "" {
 		return pushBuildUrl + "/actions/runs/" + runId
 	} else {
 		return strings.TrimSuffix(prBuildUrlRaw, ".diff")
 	}
 }
 
-func SendMessage(payload []byte, url string) error{
+func SendMessage(payload []byte, url string) error {
 	client := &http.Client{}
 	// Building request
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payload))
@@ -89,4 +89,11 @@ func SendMessage(payload []byte, url string) error{
 		log.Println("Slack message was succesfuly sent")
 	}
 	return err
+}
+
+func getEndpoint(message *MessageFactory) string {
+	if message.Endpoint != "" {
+		return message.Endpoint
+	}
+	return fmt.Sprintf("<https://%s-%s.%s>", message.Environment, message.ProjectName, message.Zone)
 }

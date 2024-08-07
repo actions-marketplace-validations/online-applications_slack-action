@@ -40,9 +40,10 @@ type MessageFactory struct {
 	Channel           string `json:"channel"`
 	Version           string `json:"version"`
 	Zone              string `json:"zone"`
+	Endpoint          string `json:"endpoint"`
 }
 
-func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environment, team, buildName, commitMeessage, channel, version, zone string) MessageFactory {
+func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environment, team, buildName, commitMeessage, channel, version, zone, endpoint string) MessageFactory {
 	g := MessageFactory{}
 	g.ProjectName = projectName
 	g.ProjectUrl = projectUrl
@@ -55,6 +56,7 @@ func CreateMessageFactory(projectName, projectUrl, buildUrl, commiterID, environ
 	g.Channel = channel
 	g.Version = version
 	g.Zone = zone
+	g.Endpoint = endpoint
 	return g
 }
 
@@ -248,7 +250,7 @@ func (m *MessageFactory) SuccessMessageFeature() Message {
 					},
 					{
 						Title: "Endpoint",
-						Value: fmt.Sprintf("<https://%s-%s.%s>", m.Environment, m.ProjectName, m.Zone),
+						Value: getEndpoint(m),
 						Short: true,
 					},
 					{
@@ -353,7 +355,7 @@ func (m *MessageFactory) StartMessageRollout() Message {
 					},
 					{
 						Title: "Endpoint",
-						Value: fmt.Sprintf("<https://%s-%s.%s>", m.Environment, m.ProjectName, m.Zone),
+						Value: getEndpoint(m),
 						Short: true,
 					},
 				},
@@ -398,7 +400,7 @@ func (m *MessageFactory) SuccessMessageRollout() Message {
 					},
 					{
 						Title: "Endpoint",
-						Value: fmt.Sprintf("<https://%s-%s.%s>", m.Environment, m.ProjectName, m.Zone),
+						Value: getEndpoint(m),
 						Short: true,
 					},
 				},
