@@ -1,11 +1,12 @@
-FROM golang:1.17 as build
+FROM golang:1.17 AS build
 WORKDIR /opt/src
 COPY . .
 RUN groupadd -g 1000 appuser &&\
     useradd -m -u 1000 -g appuser appuser
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo /opt/src
 
-FROM alpine:3.15
+FROM alpine:3.20
+RUN apk update
 RUN apk add --no-cache git
 LABEL "repository"="https://github.com/online-applications/slack-action"
 LABEL "version"="1.0.0"

@@ -1,0 +1,69 @@
+name: Docker Build
+
+on:
+  push:
+    branches:
+      - production
+
+env:
+  GCP_PROJ: prog-production
+  GCR_REGION: us-east4
+  ENVIRONMENT: ${{ github.ref_name }}
+  RELEASE_TAG: v2.0.0
+
+jobs:
+
+  Start_Build:
+    name: Start Docker Build
+
+    runs-on:
+      group: productionAmdGCP
+
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set image tag
+        id: set-tag
+        run: |
+          if [ "${{ env.ENVIRONMENT }}" == "production" ]; then
+            echo "IMAGE_TAG=${{ env.RELEASE_TAG }}" >> $GITHUB_OUTPUT
+            TAG_NAME=${{ env.RELEASE_TAG }}
+          else
+            echo "IMAGE_TAG=dev" >> $GITHUB_OUTPUT
+            TAG_NAME=dev
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git tag --delete $TAG_NAME 2>/dev/null || true
+          git push origin --delete $TAG_NAME 2>/dev/null || true
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/294225887853/locations/global/workloadIdentityPools/github/providers/github
+          service_account: github-sa@global-mgmt.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for Artifact Registry
+        run: |
+          gcloud auth configure-docker ${{ env.GCR_REGION }}-docker.pkg.dev --quiet
+
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_PATH=${{ env.GCR_REGION }}-docker.pkg.dev/${{ env.GCP_PROJ }}/${{ env.GCR_REGION }}
+          IMAGE_NAME=$IMAGE_PATH/${{ github.repository }}:${{ steps.set-tag.outputs.IMAGE_TAG }}
+
+          docker build --network host -t $IMAGE_NAME .
+          docker push $IMAGE_NAME

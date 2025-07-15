@@ -3,7 +3,7 @@ name: Release
 on: 
   push:
     branches:
-      - production
+      - production-aws
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
