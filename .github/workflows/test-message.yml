@@ -18,7 +18,7 @@ jobs:
   slack-message:
     runs-on: ubuntu-latest
     steps:
-      - uses: risecodes/slack-message-action@v1
+      - uses: risecodes/slack-message-action@master
         with:
           message-type: 'started'
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
