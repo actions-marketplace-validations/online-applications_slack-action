@@ -1,0 +1,24 @@
+name: test-message.yml
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      message-type:
+        description: 'Message type'
+        required: true
+        options:
+          - started
+          - finished
+          - failed
+        default: 'started'
+      channel-id:
+        description: 'Channel ID'
+
+jobs:
+  slack-message:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: risecodes/slack-message-action@v1
+        with:
+          message-type: 'started'
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
